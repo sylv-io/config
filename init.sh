@@ -17,6 +17,7 @@ fetch() {
   echo "fetch: config"
   if is_command git; then
     config=$(dirname $config_dir)
+    rm -rf $config_dir
     mkdir -p $config
     cd $config
     git clone -q $repo
@@ -31,7 +32,7 @@ update() {
   echo "update: config"
   if is_command git; then
     cd $config_dir
-    git pull -q
+    git pull -q || fetch
     return
   fi
   echoerr "fetch: unable to find git"
