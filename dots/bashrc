@@ -1,0 +1,21 @@
+# enable color
+alias ls='ls --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip -color=auto'
+
+# local bins
+export PATH=$PATH:${HOME}/.local/bin
+export PATH=$PATH:${HOME}/.cargo/bin
+# Golang
+export GOPATH=${HOME}/go
+export PATH=$PATH:${GOPATH}/bin
+
+PS1='\n[\u \W]\$ '
+if [ ! -z "${SSH_CLIENT}" ]; then
+  if command -v hostname >/dev/null; then
+    PS1='\n[\u@'$(hostname -f)' \W]\$ '
+    else if [ ! -z "$HOSTNAME" ]; then
+      PS1='\n[\u@'${HOSTNAME}' \W]\$ '
+    fi
+  fi
+fi

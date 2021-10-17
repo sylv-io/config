@@ -18,3 +18,4 @@ function dotconfig() {
 
 dotconfig init.vim .config/nvim/init.vim
 dotconfig tmux.conf .tmux.conf
+dotconfig bashrc .bashrc.local
