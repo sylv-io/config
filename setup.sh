@@ -3,7 +3,7 @@
 set -e
 
 dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-bashrc_src="[ -f .bashrc.local ] && source .bashrc.local"
+bashrc_src="[ -f ~/.bashrc.local ] && source ~/.bashrc.local"
 
 dotconfig() {
 	local config="${dir}/dots/$1"
