@@ -9,13 +9,3 @@ export PATH=$PATH:${HOME}/.cargo/bin
 # Golang
 export GOPATH=${HOME}/go
 export PATH=$PATH:${GOPATH}/bin
-
-PS1='\n[\u \W]\$ '
-if [ ! -z "${SSH_CLIENT}" ]; then
-  if command -v hostname >/dev/null; then
-    PS1='\n[\u@'$(hostname -f)' \W]\$ '
-    else if [ ! -z "$HOSTNAME" ]; then
-      PS1='\n[\u@'${HOSTNAME}' \W]\$ '
-    fi
-  fi
-fi
