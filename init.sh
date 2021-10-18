@@ -16,10 +16,10 @@ echoerr() {
 fetch() {
   echo "fetch: config"
   if is_command git; then
-    config=$(dirname $config_dir)
-    rm -rf $config_dir
-    mkdir -p $config
-    cd $config
+    config=$(dirname "$config_dir")
+    rm -rf "$config_dir"
+    mkdir -p "$config"
+    cd "$config"
     git clone -q $repo
     return
   fi
@@ -31,7 +31,7 @@ fetch() {
 update() {
   echo "update: config"
   if is_command git; then
-    cd $config_dir
+    cd "$config_dir"
     git pull -q || fetch
     return
   fi
@@ -45,7 +45,7 @@ setup() {
   else
     update
   fi
-  cd $config_dir
+  cd "$config_dir"
   echo "setup: config"
   ./setup.sh
 }

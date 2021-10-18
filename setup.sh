@@ -2,14 +2,14 @@
 
 set -e
 
-dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+dir=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 bashrc_src="[ -f ~/.bashrc.local ] && source ~/.bashrc.local"
 
 dotconfig() {
-	local config="${dir}/dots/$1"
-	local dest="${HOME}/$2"
-	mkdir -p $(dirname $dest)
-	if [ -e "$dest" -a ! -L "$dest" ]; then
+	config="${dir}/dots/$1"
+	dest="${HOME}/$2"
+	mkdir -p "$(dirname "$dest")"
+	if [ -e "$dest" ] && [ ! -L "$dest" ]; then
 		>&2 echo "moving old config to ${dest}.old"
 		mv "${dest}" "${dest}.old"
 	fi
@@ -20,7 +20,7 @@ dotconfig() {
 bashrc_hook() {
   if ! grep -Fxq "$bashrc_src" "${HOME}/.bashrc"; then
     echo "append \"$bashrc_src\" to .bashrc"
-    echo "$bashrc_src" >> ${HOME}/.bashrc
+    echo "$bashrc_src" >> "${HOME}/.bashrc"
   fi
 }
 
