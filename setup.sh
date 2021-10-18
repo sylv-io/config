@@ -11,7 +11,7 @@ dotconfig() {
 	mkdir -p $(dirname $dest)
 	if [ -e "$dest" -a ! -L "$dest" ]; then
 		>&2 echo "moving old config to ${dest}.old"
-		mv "${dest}"{,.old}
+		mv "${dest}" "${dest}.old"
 	fi
 	echo "linking $config -> $dest"
 	ln -sf "$config" "$dest"
