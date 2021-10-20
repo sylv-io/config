@@ -33,7 +33,7 @@ install_nvim() {
     echo "get $nvim"
     mkdir -p "$bin"
     tmp=$(mktemp)
-    curl -Lo "$tmp" "$nvim_src"
+    curl -Lo "$tmp" "$nvim_src" >/dev/null
     chmod +x "$tmp"
     mv "$tmp" "$nvim"
   fi
