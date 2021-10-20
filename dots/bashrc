@@ -3,7 +3,7 @@ alias ls='ls --color=auto'
 alias diff='diff --color=auto'
 alias ip='ip -color=auto'
 
-export PATH=$PATH:${HOME}/.local/bin
+export PATH=${HOME}/.local/bin:$PATH
 # Rust
 export PATH=$PATH:${HOME}/.cargo/bin
 # Golang
