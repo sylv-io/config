@@ -12,3 +12,6 @@ export PATH=$PATH:${GOPATH}/bin
 # Editor
 alias vim=nvim
 export EDITOR=nvim
+
+# direnv
+command -v direnv >/dev/null && eval "$(direnv hook bash)"
