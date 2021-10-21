@@ -5,7 +5,10 @@ set number
 set showmatch
 set smartcase
 set tabstop=4
-set autoindent
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
 syntax on
 filetype plugin indent on
 let g:vimsyn_embed= 'lPr'
