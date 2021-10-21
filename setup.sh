@@ -6,7 +6,8 @@ dir=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 bin="$HOME/.local/bin"
 
 bashrc="$dir/dots/bashrc"
-bash_hook="[ -f $bashrc ] && source $bashrc"
+tag="sylv-io"
+bash_hook="[ -f $bashrc ] && source $bashrc #$tag"
 
 # default
 arg="${1:-install}"
@@ -80,9 +81,9 @@ add_bashrc_hook() {
 }
 
 del_bashrc_hook() {
-  if grep -Fxq "$bash_hook" "$HOME/.bashrc"; then
+  if grep -Fq "$tag" "$HOME/.bashrc"; then
     echo "remove: \"$bash_hook\" from .bashrc"
-    echo "WIP: not implemented" 1>&2
+    sed -i "/$tag/d" "$HOME/.bashrc"
   fi
 }
 
