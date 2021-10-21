@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+{
+
+  config_dir="${HOME}/.local/share/config"
+  setup="$config_dir/setup.sh"
+
+  remove() {
+    if [ -x "$setup" ]; then
+      $setup remove
+    fi
+    rm -rf "$config_dir"
+  }
+
+  remove
+
+}
