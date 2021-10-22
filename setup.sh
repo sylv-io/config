@@ -6,8 +6,7 @@ dir=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 bin="$HOME/.local/bin"
 
 bashrc="$dir/dots/bashrc"
-tag="sylv-io"
-bash_hook="[ -f $bashrc ] && source $bashrc #$tag"
+bash_hook="[ -f $bashrc ] && source $bashrc"
 
 # default
 arg="${1:-install}"
@@ -16,7 +15,7 @@ case $arg in
   install)
     op="add"
     ;;
-  remove)
+  remove|uninstall)
     op="del"
     ;;
   *)
@@ -73,6 +72,16 @@ install_nvim() {
   fi
 }
 
+setup_nvim() {
+  case $op in
+    add)
+      install_nvim
+      ;;
+    del)
+      ;;
+  esac
+}
+
 add_bashrc_hook() {
   if ! grep -Fxq "$bash_hook" "$HOME/.bashrc"; then
     echo "append: \"$bash_hook\" to .bashrc"
@@ -81,9 +90,9 @@ add_bashrc_hook() {
 }
 
 del_bashrc_hook() {
-  if grep -Fq "$tag" "$HOME/.bashrc"; then
+  if grep -Fq "dots/bashrc" "$HOME/.bashrc"; then
     echo "remove: \"$bash_hook\" from .bashrc"
-    sed -i "/$tag/d" "$HOME/.bashrc"
+    sed -i "/dots\/bashrc/d" "$HOME/.bashrc"
   fi
 }
 
@@ -100,5 +109,5 @@ bashrc_hook() {
 
 dotconfig init.vim .config/nvim/init.vim
 dotconfig tmux.conf .tmux.conf
-install_nvim
+setup_nvim
 bashrc_hook
