@@ -5,8 +5,18 @@ set -e
 dir=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 bin="$HOME/.local/bin"
 
-bashrc="$dir/dots/bashrc"
-bash_hook="[ -f $bashrc ] && source $bashrc"
+is_command() {
+  command -v "$1" >/dev/null
+}
+
+echoerr() {
+  echo "$@" 1>&2
+}
+
+die() {
+  echoerr "$@"
+  exit 1
+}
 
 # default
 arg="${1:-install}"
@@ -19,10 +29,21 @@ case $arg in
     op="del"
     ;;
   *)
-    echo "usage: $0 <install/remove>" 1>&2
-    exit 1
+    die "usage: $0 <install/remove>"
     ;;
 esac
+
+download() {
+  url=$1
+  out=$2
+  if is_command curl;then
+    curl -Lo "$out" "$url" >/dev/null
+  elif is_command wget;then
+    wget -O "$out" "$url" >/dev/null
+  else
+    echoerr "curl or wget not found"
+  fi
+}
 
 add_dotconfig() {
   config="$dir/dots/$1"
@@ -66,7 +87,7 @@ install_nvim() {
     echo "get $nvim"
     mkdir -p "$bin"
     tmp=$(mktemp)
-    curl -Lo "$tmp" "$nvim_src" >/dev/null
+    download "$nvim_src" "$tmp" >/dev/null
     chmod +x "$tmp"
     mv "$tmp" "$nvim"
   fi
@@ -82,15 +103,18 @@ setup_nvim() {
   esac
 }
 
+bashrc="$dir/dots/bashrc"
+bash_hook="[ -f $bashrc ] && source $bashrc"
+
 add_bashrc_hook() {
-  if ! grep -Fxq "$bash_hook" "$HOME/.bashrc"; then
+  if ! grep -Fxq "$bash_hook" "$HOME/.bashrc" >/dev/null; then
     echo "append: \"$bash_hook\" to .bashrc"
     echo "$bash_hook" >> "$HOME/.bashrc"
   fi
 }
 
 del_bashrc_hook() {
-  if grep -Fq "dots/bashrc" "$HOME/.bashrc"; then
+  if grep -Fq "dots/bashrc" "$HOME/.bashrc" >/dev/null; then
     echo "remove: \"$bash_hook\" from .bashrc"
     sed -i "/dots\/bashrc/d" "$HOME/.bashrc"
   fi
