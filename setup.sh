@@ -86,10 +86,8 @@ install_nvim() {
   if [ ! -x "$nvim" ]; then
     echo "get $nvim"
     mkdir -p "$bin"
-    tmp=$(mktemp)
-    download "$nvim_src" "$tmp" >/dev/null
-    chmod +x "$tmp"
-    mv "$tmp" "$nvim"
+    download "$nvim_src" "$nvim" >/dev/null
+    chmod +x "$nvim"
   fi
 }
 
