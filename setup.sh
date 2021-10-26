@@ -4,6 +4,8 @@ set -e
 
 dir=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 bin="$HOME/.local/bin"
+bashrc="$dir/dots/bashrc"
+bash_hook="[ -f $bashrc ] && source $bashrc"
 
 is_command() {
   command -v "$1" >/dev/null
@@ -84,25 +86,34 @@ install_nvim() {
   nvim_src="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
   nvim="$bin/nvim"
   if [ ! -x "$nvim" ]; then
-    echo "get $nvim"
+    echo "downloading $nvim"
     mkdir -p "$bin"
     download "$nvim_src" "$nvim" >/dev/null
     chmod +x "$nvim"
   fi
 }
 
+check_nvim() {
+  if is_command nvim;then
+    version=$(nvim -v | head -n1 |cut -d '.' -f2)
+    if [ "$version" -ge 5 ];then
+      return
+    else
+      echo "nvim vesion to low (<v0.5)"
+    fi
+  fi
+  install_nvim
+}
+
 setup_nvim() {
   case $op in
     add)
-      install_nvim
+      check_nvim
       ;;
     del)
       ;;
   esac
 }
-
-bashrc="$dir/dots/bashrc"
-bash_hook="[ -f $bashrc ] && source $bashrc"
 
 add_bashrc_hook() {
   if ! grep -Fxq "$bash_hook" "$HOME/.bashrc" >/dev/null; then
@@ -118,7 +129,7 @@ del_bashrc_hook() {
   fi
 }
 
-bashrc_hook() {
+setup_bash() {
   case $op in
     add)
         add_bashrc_hook
@@ -132,4 +143,4 @@ bashrc_hook() {
 dotconfig init.vim .config/nvim/init.vim
 dotconfig tmux.conf .tmux.conf
 setup_nvim
-bashrc_hook
+setup_bash
