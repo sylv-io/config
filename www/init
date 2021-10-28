@@ -35,7 +35,7 @@ set -e
     echo "update: config"
     if is_command git; then
       cd "$config_dir"
-      git pull -q || fetch
+      git pull -q 2>&1 >/dev/null || fetch
       return
     fi
     echoerr "fetch: unable to find git"
