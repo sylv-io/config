@@ -119,14 +119,14 @@ setup_nvim() {
 }
 
 add_bashrc_hook() {
-  if ! grep -Fxq "$bash_hook" "$HOME/.bashrc" >/dev/null; then
+  if ! grep -Fxq "$bash_hook" "$HOME/.bashrc" >/dev/null 2>&1; then
     echo "append: \"$bash_hook\" to .bashrc"
     echo "$bash_hook" >> "$HOME/.bashrc"
   fi
 }
 
 del_bashrc_hook() {
-  if grep -Fq "dots/bashrc" "$HOME/.bashrc" >/dev/null; then
+  if grep -Fq "dots/bashrc" "$HOME/.bashrc" >/dev/null 2>&1; then
     echo "remove: \"$bash_hook\" from .bashrc"
     sed -i "/dots\/bashrc/d" "$HOME/.bashrc"
   fi
@@ -145,10 +145,10 @@ setup_bash() {
 
 config_git() {
   if is_command git;then
-    if ! grep -Fxq "$name" "$gitconfig" >/dev/null; then
+    if ! grep -Fxq "$name" "$gitconfig" >/dev/null 2>&1; then
       git config --global user.name "$name"
     fi
-    if ! grep -Fxq "$email" "$gitconfig" >/dev/null; then
+    if ! grep -Fxq "$email" "$gitconfig" >/dev/null 2>&1; then
       git config --global user.email "$email"
     fi
   fi
