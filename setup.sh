@@ -2,10 +2,13 @@
 
 set -e
 
+name="Marcello Sylvester Bauer"
+email="sylv@sylv.io"
 dir=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 bin="$HOME/.local/bin"
 bashrc="$dir/dots/bashrc"
 bash_hook="[ -f $bashrc ] && source $bashrc"
+gitconfig="$HOME/.gitconfig"
 
 is_command() {
   command -v "$1" >/dev/null
@@ -140,7 +143,29 @@ setup_bash() {
   esac
 }
 
+config_git() {
+  if is_command git;then
+    if ! grep -Fxq "$name" "$gitconfig" >/dev/null; then
+      git config --global user.name "$name"
+    fi
+    if ! grep -Fxq "$email" "$gitconfig" >/dev/null; then
+      git config --global user.email "$email"
+    fi
+  fi
+}
+
+setup_git() {
+  case $op in
+    add)
+        config_git
+      ;;
+    del)
+      ;;
+  esac
+}
+
 dotconfig init.vim .config/nvim/init.vim
 dotconfig tmux.conf .tmux.conf
 setup_nvim
 setup_bash
+setup_git
