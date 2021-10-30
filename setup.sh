@@ -47,6 +47,7 @@ download() {
     wget -O "$out" "$url" >/dev/null
   else
     echoerr "curl or wget not found"
+    return 1
   fi
 }
 
@@ -177,6 +178,6 @@ setup_git() {
 
 dotconfig init.vim .config/nvim/init.vim
 dotconfig tmux.conf .tmux.conf
-setup_nvim
 setup_bash
 setup_git
+setup_nvim
