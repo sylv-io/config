@@ -141,12 +141,16 @@ dotconfig() {
 
 ### Neovim
 
+nvim_src="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+nvim="$bin/nvim"
+
 install_nvim() {
-  nvim_src="https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
-  nvim="$bin/nvim"
   if can_download; then
     info "downloading $nvim"
     mkdir -p "$bin"
+    if [ -f "$nvim" ];then
+      rm -r "$nvim"
+    fi
     download "$nvim_src" "$nvim" >/dev/null
     chmod +x "$nvim"
     if ! "$nvim" -v >/dev/null 2>&1;then
@@ -154,12 +158,16 @@ install_nvim() {
       nvim_share="$HOME/.local/share/nvim"
       mkdir -p "$nvim_share"
       cd "$nvim_share"
-      if $nvim --appimage-extract >/dev/null 2>&1;then
+      if $nvim --appimage-extract >/dev/null;then
         ln -snf "$nvim_share/squashfs-root/AppRun" "$nvim"
       else
         rm "$nvim"
         warn "Failed to install nvim"
+        return
       fi
+    fi
+    if "$nvim" -v >/dev/null 2>&1;then
+      log_done "nvim installed"
     fi
   else
     warn "Unable to download nvim"
@@ -167,9 +175,15 @@ install_nvim() {
 }
 
 check_nvim() {
-  if is_command nvim;then
-    major=$(nvim -v | head -n1 |cut -d '.' -f2)
-    minor=$(nvim -v | head -n1 |cut -d '.' -f3)
+  if is_command nvim || [ -x "$nvim" ] ;then
+    nvim_bin=
+    if [ -x "$nvim" ];then
+      nvim_bin="$nvim"
+    else
+      nvim_bin="nvim"
+    fi
+    major=$(${nvim_bin} -v | head -n1 |cut -d '.' -f2)
+    minor=$(${nvim_bin} -v | head -n1 |cut -d '.' -f3)
     if [ "$major" -ge 5 ] && [ "$minor" -ge 1 ];then
       return
     else
@@ -260,7 +274,7 @@ setup_git() {
 setup_done() {
   case $op in
     add)
-      log_done "setup installed"
+      log_done "setup complete"
       ;;
     del)
       log_done "setup removed"
