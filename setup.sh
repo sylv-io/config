@@ -271,6 +271,26 @@ setup_git() {
   esac
 }
 
+### commands
+
+check_cmds() {
+  for cmd in tmux direnv;do
+    if ! is_command $cmd;then
+      warn "$cmd not installed"
+    fi
+  done
+}
+
+setup_cmds() {
+  case $op in
+    add)
+      check_cmds
+      ;;
+    del)
+      ;;
+  esac
+}
+
 setup_done() {
   case $op in
     add)
@@ -289,5 +309,6 @@ dotconfig tmux.conf .tmux.conf
 setup_git
 setup_bash
 setup_nvim
+setup_cmds
 
 setup_done
