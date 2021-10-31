@@ -110,7 +110,7 @@ add_dotconfig() {
     warn "moving file: $dest -> $dest.old"
     mv "$dest" "$dest.old"
   fi
-  if [ "$(readlink -f "$dest")" != "$config" ];then
+  if [ ! -L "$dest" ] || [ "$(readlink -f "$dest")" != "$(readlink -f "$config")" ];then
     info "link: $dest -> $config"
     ln -sf "$config" "$dest"
   fi
@@ -199,7 +199,7 @@ add_bashrc_hook() {
     info "append bashrc hook"
     echo "$bash_hook" >> "$HOME/.bashrc"
   fi
-  [ -n "$SYLV" ] || warn "run: source $bashrc"
+  [ -n "${SYLV:-}" ] || warn "run: source $bashrc"
 }
 
 del_bashrc_hook() {
