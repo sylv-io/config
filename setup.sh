@@ -158,7 +158,7 @@ install_nvim() {
       nvim_share="$HOME/.local/share/nvim"
       mkdir -p "$nvim_share"
       cd "$nvim_share"
-      if $nvim --appimage-extract >/dev/null;then
+      if $nvim --appimage-extract >/dev/null 2>&1;then
         ln -snf "$nvim_share/squashfs-root/AppRun" "$nvim"
       else
         rm "$nvim"

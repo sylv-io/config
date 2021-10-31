@@ -5,12 +5,14 @@ alias ls='ls --color=auto'
 alias diff='diff --color=auto'
 alias ip='ip -color=auto'
 
-export PATH=${HOME}/.local/bin:$PATH
+[[ ":$PATH:" = *:"$HOME/.local/bin":* ]] || export PATH="$HOME/.local/bin:$PATH"
 # Rust
-export PATH=$PATH:${HOME}/.cargo/bin
+alias rustup="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+[[ ":$PATH:" = *:"$HOME/.cargo/bin":* ]] || export PATH="$HOME/.cargo/bin:$PATH"
 # Golang
 export GOPATH=${HOME}/go
-export PATH=$PATH:${GOPATH}/bin
+alias goup="curl -sSf https://raw.githubusercontent.com/owenthereal/goup/master/install.sh | sh"
+[[ ":$PATH:" = *:"$GOPATH/bin":* ]] || export PATH="$GOPATH/bin:$PATH"
 # Editor
 alias vim=nvim
 export EDITOR=nvim
