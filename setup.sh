@@ -74,9 +74,9 @@ download() {
   url=$1
   out=$2
   if is_command curl;then
-    curl -Lo "$out" "$url" >/dev/null
+    curl -Lso "$out" "$url" >/dev/null
   elif is_command wget;then
-    wget -O "$out" "$url" >/dev/null
+    wget -qO "$out" "$url" >/dev/null
   else
     error "curl or wget not found"
     return 1
