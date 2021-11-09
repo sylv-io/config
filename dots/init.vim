@@ -1,5 +1,3 @@
-"UI:
-"---
 set hidden
 set number
 set showmatch
@@ -7,7 +5,6 @@ set smartcase
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set expandtab
 set smartindent
 syntax on
 filetype plugin indent on
@@ -21,9 +18,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 autocmd VimResized * wincmd =
 set path=.,,**
-
-"MAPPING:
-"--------
 " disable arrows
 nnoremap <Up> <NOP>
 nnoremap <Down> <NOP>
@@ -51,15 +45,23 @@ end
 -- install plugins
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  -- theme
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
+  -- POSIX shell
   use 'itspriddle/vim-shellcheck'
-  use 'tpope/vim-fugitive'
+  -- text linting
   use 'editorconfig/editorconfig-vim'
+  -- LSP
   use 'neovim/nvim-lspconfig'
+  -- complete
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
+  -- vsnip
+  use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/vim-vsnip'
   if packer_bootstrap then
     require('packer').sync()
@@ -110,17 +112,10 @@ else
         vim.fn["vsnip#anonymous"](args.body)
       end,
     },
-    mapping = {
-      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
     sources = {
       { name = 'nvim_lsp' },
       { name = 'vsnip' },
-    }
+    },
   })
 
   -- init lsp servers
