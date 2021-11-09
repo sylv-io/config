@@ -7,11 +7,11 @@ alias ip='ip -color=auto'
 
 [[ ":$PATH:" = *:"$HOME/.local/bin":* ]] || export PATH="$HOME/.local/bin:$PATH"
 # Rust
-alias rustup="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+alias init_rust="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 [[ ":$PATH:" = *:"$HOME/.cargo/bin":* ]] || export PATH="$HOME/.cargo/bin:$PATH"
 # Golang
 export GOPATH=${HOME}/go
-alias goup="curl -sSf https://raw.githubusercontent.com/owenthereal/goup/master/install.sh | sh"
+alias init_go="curl -sSf https://raw.githubusercontent.com/owenthereal/goup/master/install.sh | sh"
 [[ ":$PATH:" = *:"$GOPATH/bin":* ]] || export PATH="$GOPATH/bin:$PATH"
 # Editor
 alias vim=nvim
