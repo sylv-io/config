@@ -52,6 +52,8 @@ require('packer').startup(function(use)
   use 'itspriddle/vim-shellcheck'
   -- text linting
   use 'editorconfig/editorconfig-vim'
+  -- Git
+  use 'tpope/vim-fugitive'
   -- LSP
   use 'neovim/nvim-lspconfig'
   -- complete
