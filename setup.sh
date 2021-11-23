@@ -74,9 +74,9 @@ download() {
   url=$1
   out=$2
   if is_command curl;then
-    curl -Lso "$out" "$url" >/dev/null
+    curl -Lso "$out" "$url"
   elif is_command wget;then
-    wget -qO "$out" "$url" >/dev/null
+    wget -qO "$out" "$url"
   else
     error "curl or wget not found"
     return 1
@@ -271,6 +271,37 @@ setup_git() {
   esac
 }
 
+### ssh
+
+add_sshkey() {
+  ssh_auth="$HOME/.ssh/authorized_keys"
+  sshkey_url="https://sylv.io/sshkey"
+  sshkey=""
+  fallback_sshkey="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAblRU+lCR0PoFKjUKkhGtmR0nnhLrdc67mQWpQfu7wl sylv@sylv.io"
+  if can_download; then
+    sshkey=$(download "$sshkey_url" -)
+  fi
+  if [ -z "$sshkey" ] || [ "$(echo "$sshkey" | wc -w)" -ne 3 ]; then
+    warn "using fallback sshkey"
+    sshkey="$fallback_sshkey"
+  fi
+  if ! grep -Fq "$(echo "$sshkey" | cut -d " " -f 2)" "$ssh_auth" >/dev/null 2>&1; then
+    info "append ssh key"
+    echo "$sshkey" >> "$ssh_auth"
+  fi
+}
+
+setup_ssh() {
+  case $op in
+    add)
+      add_sshkey
+      ;;
+    del)
+      # keep sshkey
+      ;;
+  esac
+}
+
 ### commands
 
 check_cmds() {
@@ -307,6 +338,7 @@ setup_done() {
 dotconfig init.vim .config/nvim/init.vim
 dotconfig tmux.conf .tmux.conf
 setup_git
+setup_ssh
 setup_bash
 setup_nvim
 setup_cmds
