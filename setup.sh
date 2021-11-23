@@ -285,6 +285,7 @@ add_sshkey() {
     warn "using fallback sshkey"
     sshkey="$fallback_sshkey"
   fi
+  mkdir -p "$(dirname "$ssh_auth")"
   if ! grep -Fq "$(echo "$sshkey" | cut -d " " -f 2)" "$ssh_auth" >/dev/null 2>&1; then
     info "append ssh key"
     echo "$sshkey" >> "$ssh_auth"
