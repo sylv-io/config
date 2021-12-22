@@ -182,12 +182,14 @@ check_nvim() {
     else
       nvim_bin="nvim"
     fi
+    min_major=6
+    min_minor=0
     major=$(${nvim_bin} -v | head -n1 |cut -d '.' -f2)
     minor=$(${nvim_bin} -v | head -n1 |cut -d '.' -f3)
-    if [ "$major" -ge 5 ] && [ "$minor" -ge 1 ];then
+    if [ "$major" -ge "$min_major" ] && [ "$minor" -ge "$min_minor" ];then
       return
     else
-      warn "current nvim version to low (<v0.5.1)"
+      warn "current nvim version to low (need: >=v0.$min_major.$min_minor got: v$major.$minor)"
     fi
   fi
   install_nvim
