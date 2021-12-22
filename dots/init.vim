@@ -121,7 +121,7 @@ else
   })
 
   -- init lsp servers
-  local servers = { 'als', 'bashls', 'ccls', 'cmake', 'dockerls', 'dotls', 'gopls', 'html', 'jsonls', 'texlab',
+  local servers = { 'als', 'bashls', 'cmake', 'dockerls', 'dotls', 'gopls', 'html', 'jsonls', 'texlab',
   'rnix', 'psalm', 'pyright', 'rls', 'taplo', 'tsserver', 'vimls', 'lemminx', 'yamlls' }
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
@@ -134,14 +134,14 @@ else
   end
 
   -- TODO: prevent default boilerplate
-  -- custom lsp setup for ccls
-  nvim_lsp.ccls.setup{
+  -- custom lsp setup for clangd
+  nvim_lsp.clangd.setup{
       on_attach = on_attach,
       flags = {
         debounce_text_changes = 150,
       },
       capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-      cmd={"ccls", "--init", string.format('{"cache":{"directory":"%s/.cache/ccls"}}',os.getenv("HOME"))}
+      cmd={"clangd", "-j=4", "-completion-style=detailed", "-background-index", "-all-scopes-completion", "--suggest-missing-includes"}
   }
 end
 EOF
