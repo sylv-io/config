@@ -281,7 +281,7 @@ add_sshkey() {
   sshkey=""
   fallback_sshkey="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAblRU+lCR0PoFKjUKkhGtmR0nnhLrdc67mQWpQfu7wl sylv@sylv.io"
   if can_download; then
-    sshkey=$(download "$sshkey_url" -)
+    sshkey=$(download "$sshkey_url" - || true)
   fi
   if [ -z "$sshkey" ] || [ "$(echo "$sshkey" | wc -w)" -ne 3 ]; then
     warn "using fallback sshkey"
