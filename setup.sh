@@ -205,33 +205,33 @@ setup_nvim() {
   esac
 }
 
-### Bash
+### Shell
 
-bashrc="$dir/dots/bashrc"
-bash_hook="[ -f $bashrc ] && source $bashrc"
+profile="$dir/dots/profile"
+profile_hook="[ -f $profile ] && source $profile"
 
-add_bashrc_hook() {
-  if ! grep -Fxq "$bash_hook" "$HOME/.bashrc" >/dev/null 2>&1; then
-    info "append bashrc hook"
-    echo "$bash_hook" >> "$HOME/.bashrc"
+add_profile_hook() {
+  if ! grep -Fxq "$profile_hook" "$HOME/.profile" >/dev/null 2>&1; then
+    info "append shell hook"
+    echo "$profile_hook" >> "$HOME/.profile"
   fi
-  [ -n "${SYLV:-}" ] || warn "run: source $bashrc"
+  [ -n "${SYLV:-}" ] || warn "run: source $profile"
 }
 
-del_bashrc_hook() {
-  if grep -Fq "dots/bashrc" "$HOME/.bashrc" >/dev/null 2>&1; then
-    info "remove bashrc hook"
-    sed -i "/dots\/bashrc/d" "$HOME/.bashrc"
+del_profile_hook() {
+  if grep -Fq "dots/profile" "$HOME/.profile" >/dev/null 2>&1; then
+    info "remove shell hook"
+    sed -i "/dots\/profile/d" "$HOME/.profile"
   fi
 }
 
-setup_bash() {
+setup_shell() {
   case $op in
     add)
-        add_bashrc_hook
+        add_profile_hook
       ;;
     del)
-        del_bashrc_hook
+        del_profile_hook
       ;;
   esac
 }
@@ -342,7 +342,7 @@ dotconfig init.vim .config/nvim/init.vim
 dotconfig tmux.conf .tmux.conf
 setup_git
 setup_ssh
-setup_bash
+setup_shell
 setup_nvim
 setup_cmds
 
