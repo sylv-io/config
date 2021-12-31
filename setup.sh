@@ -208,30 +208,36 @@ setup_nvim() {
 ### Shell
 
 profile="$dir/dots/profile"
-profile_hook="[ -f $profile ] && source $profile"
-
-add_profile_hook() {
-  if ! grep -Fxq "$profile_hook" "$HOME/.profile" >/dev/null 2>&1; then
-    info "append shell hook"
-    echo "$profile_hook" >> "$HOME/.profile"
-  fi
-  [ -n "${SYLV:-}" ] || warn "run: source $profile"
-}
+profile_hook="echo \$- | grep -q i && [ -f $profile ] && . $profile"
 
 del_profile_hook() {
-  if grep -Fq "dots/profile" "$HOME/.profile" >/dev/null 2>&1; then
-    info "remove shell hook"
-    sed -i "/dots\/profile/d" "$HOME/.profile"
+  file="$1"
+  if grep -Fq "dots/profile" "$HOME/$file" >/dev/null 2>&1; then
+    info "remove $file profile hook"
+    sed -i "/dots\/profile/d" "$HOME/$file"
+  fi
+}
+
+add_profile_hook() {
+  file="$1"
+  if ! grep -Fxq "$profile_hook" "$HOME/$file" >/dev/null 2>&1; then
+    del_profile_hook $file
+    info "append $file profile hook"
+    echo "$profile_hook" >> "$HOME/$file"
   fi
 }
 
 setup_shell() {
   case $op in
     add)
-        add_profile_hook
+        add_profile_hook .profile
+        add_profile_hook .bashrc
+        add_profile_hook .zshrc
       ;;
     del)
-        del_profile_hook
+        del_profile_hook .profile
+        del_profile_hook .bashrc
+        del_profile_hook .zshrc
       ;;
   esac
 }
