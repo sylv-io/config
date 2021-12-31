@@ -1,9 +1,9 @@
 export SYLV=1
 
 # enable color
-alias ls='ls --color=auto'
-alias diff='diff --color=auto'
-alias ip='ip -color=auto'
+ls 2>&1 | grep -q BusyBox || alias ls='ls --color=auto'
+diff 2>&1 | grep -q BusyBox || alias diff='diff --color=auto'
+ip 2>&1 | grep -q BusyBox || alias ip='ip -color=auto'
 
 [[ ":$PATH:" = *:"$HOME/.local/bin":* ]] || export PATH="$HOME/.local/bin:$PATH"
 # Rust
@@ -21,9 +21,9 @@ export EDITOR=nvim
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
 
 # persistant ssh-agent socket for tmux
-test "${SSH_AUTH_SOCK:-}" && test $SSH_AUTH_SOCK != $HOME/.ssh_auth_sock && {
-        test -L $HOME/.ssh_auth_sock && \
-                test "$(readlink $HOME/.ssh_auth_sock)" = $SSH_AUTH_SOCK || \
-                ln -sf $SSH_AUTH_SOCK $HOME/.ssh_auth_sock
-        export SSH_AUTH_SOCK=$HOME/.ssh_auth_sock
+test "${SSH_AUTH_SOCK:-}" && test "$SSH_AUTH_SOCK" != "$HOME/.ssh_auth_sock" && {
+        test -L "$HOME/.ssh_auth_sock" && \
+                test "$(readlink $HOME/.ssh_auth_sock)" = "$SSH_AUTH_SOCK" || \
+                ln -sf "$SSH_AUTH_SOCK" "$HOME/.ssh_auth_sock"
+        export SSH_AUTH_SOCK="$HOME/.ssh_auth_sock"
 }
