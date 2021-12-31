@@ -7,33 +7,17 @@ set -eu
 dir=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
 bin="$HOME/.local/bin"
 
-### color
-
-if [ "$(tty -s)" ]; then
-  LOG_DEFAULT_COLOR=""
-  LOG_ERR_COLOR=""
-  LOG_DONE_COLOR=""
-  LOG_WARN_COLOR=""
-  LOG_INFO_COLOR=""
-else
-  LOG_DEFAULT_COLOR=$(tput sgr0)
-  LOG_ERR_COLOR=$(tput setaf 1)
-  LOG_DONE_COLOR=$(tput setaf 2)
-  LOG_WARN_COLOR=$(tput setaf 3)
-  LOG_INFO_COLOR=$(tput setaf 4)
-fi
-
 ### helper
 
 is_command() {
   command -v "$1" >/dev/null
 }
 
+# TODO: support color outpt
 log() {
   level="$1"
   msg="$2"
-  eval "LOG_LEVEL_COLOR=\${LOG_${level}_COLOR}"
-  printf "[${LOG_LEVEL_COLOR}%4s${LOG_DEFAULT_COLOR}] %s\n" "$level" "$msg" 1>&2
+  printf "[%4s] %s\n" "$level" "$msg" 1>&2
 }
 
 error() {
@@ -221,7 +205,7 @@ del_profile_hook() {
 add_profile_hook() {
   file="$1"
   if ! grep -Fxq "$profile_hook" "$HOME/$file" >/dev/null 2>&1; then
-    del_profile_hook $file
+    del_profile_hook "$file"
     info "append $file profile hook"
     echo "$profile_hook" >> "$HOME/$file"
   fi
