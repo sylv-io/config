@@ -45,6 +45,8 @@ end
 -- install plugins
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  -- UI
+  use 'preservim/nerdtree'
   -- theme
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
