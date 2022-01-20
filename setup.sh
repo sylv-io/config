@@ -328,7 +328,7 @@ setup_done() {
 
 ### exec
 
-dotconfig init.vim .config/nvim/init.vim
+dotconfig nvim/init.lua .config/nvim/init.lua
 dotconfig tmux.conf .tmux.conf
 setup_git
 setup_ssh

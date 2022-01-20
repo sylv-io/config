@@ -1,45 +1,119 @@
-set hidden
-set number
-set showmatch
-set smartcase
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set smartindent
-syntax on
+vim.cmd([[
 filetype plugin indent on
-let g:vimsyn_embed= 'lPr'
-set list
-set listchars=tab:>-,nbsp:_,trail:•,extends:>,precedes:<
-set cc=80
 highlight ColorColumn ctermbg=black
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 autocmd VimResized * wincmd =
-set path=.,,**
-" disable arrows
-nnoremap <Up> <NOP>
-nnoremap <Down> <NOP>
-nnoremap <Left> <NOP>
-nnoremap <Right> <NOP>
-" move between windows
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-L> <C-W>l
-nnoremap <C-H> <C-W>h
-" NERDTree
-nnoremap <leader>t :NERDTreeToggle<CR>
-" FZF
-nnoremap <silent> <leader>f :FZF<cr>
-nnoremap <silent> <leader>F :FZF ~<cr>
+]])
 
-lua << EOF
--- bootstrap packer
+---- settings
+-- Enable syntax highlighting
+vim.o.syntax = "on"
+vim.o.list = true
+-- Number of spaces that a <Tab> in the file counts for
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.listchars = "tab:>-,nbsp:_,trail:•,extends:>,precedes:<"
+vim.o.cc = "80";
+
+-- Enable wrap
+vim.o.wrap = true
+-- Make line numbers default
+vim.wo.number = true
+-- Show cursor line and column in the status line
+vim.o.ruler = true
+-- Number of command-lines that are remembered
+vim.o.history = 10000
+-- Show (partial) command in status line
+vim.o.showcmd = false
+
+-- Wrap long lines at a blank
+vim.o.linebreak = true
+-- Enable break indent
+vim.o.breakindent = true
+-- Take indent for new line from previous line
+vim.o.autoindent = true
+vim.o.smartindent = true
+
+-- Enable highlight on search
+vim.o.hlsearch = true
+-- highlight match while typing search pattern
+vim.o.incsearch = true
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+-- Briefly jump to matching bracket if insert one
+vim.o.showmatch = true
+-- Hide show current mode on status line
+vim.o.showmode = false
+-- Ignore case when completing file names and directories.
+vim.o.wildignorecase = true
+
+-- Use menu for command line completion
+vim.o.wildmenu = true
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = "menuone,noselect"
+-- Disable intro message
+vim.opt.shortmess:append("I")
+-- Disable ins-completion-menu messages
+vim.opt.shortmess:append("c")
+
+-- Do not save when switching buffers
+vim.o.hidden = true
+-- Autom. read file when changed outside of Vim
+vim.o.autoread = true
+
+-- Do not source the default filetype.vim
+vim.g.did_load_filetypes = 1
+-- Disable python2 provider
+vim.g.loaded_python_provider = 0
+
+--  Maximum height of the popup menu
+vim.o.pumheight = 15
+-- Minimum nr. of lines above and below cursor
+vim.o.scrolloff = 5 -- could be 1
+vim.o.sidescrolloff = 5
+-- vim.o.display = 'lastline'
+
+-- Folding
+vim.o.foldenable = false
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
+-- Timeout on leaderkey
+vim.o.ttimeout = true
+vim.o.ttimeoutlen = 5
+-- Decrease update time
+vim.o.updatetime = 250
+vim.wo.signcolumn = "yes"
+-- Asyncrun automatically open quickfix window
+vim.g.asyncrun_open = 6
+
+---- keymaps
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+-- disable arrows
+map("n", "<Up>", "<NOP>", opts)
+map("n", "<Down>", "<NOP>", opts)
+map("n", "<Left>", "<NOP>", opts)
+map("n", "<Right>", "<NOP>", opts)
+-- move between windows
+map("n", "<C-J>", "<C-W>j", opts)
+map("n", "<C-K>", "<C-W>k", opts)
+map("n", "<C-L>", "<C-W>l", opts)
+map("n", "<C-H>", "<C-W>h", opts)
+-- NERDTree
+map("n", "<leader>t", ":NERDTreeToggle<CR>", opts)
+-- FZF
+map("n", "<leader>f", ":FZF<CR>", opts)
+map("n", "<leader>F", ":FZF ~<CR>", opts)
+
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  Packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 -- install plugins
@@ -67,14 +141,14 @@ require('packer').startup(function(use)
   -- vsnip
   use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/vim-vsnip'
-  if packer_bootstrap then
+  if Packer_bootstrap then
     require('packer').sync()
   end
 end)
 
-if packer_bootstrap then
+if Packer_bootstrap then
   -- reload config
-  packer_bootstrap = false
+  Packer_bootstrap = false
   vim.cmd [[
     autocmd User PackerComplete source $MYVIMRC
   ]]
@@ -138,12 +212,25 @@ else
   -- TODO: prevent default boilerplate
   -- custom lsp setup for clangd
   nvim_lsp.clangd.setup{
-      on_attach = on_attach,
-      flags = {
-        debounce_text_changes = 150,
-      },
-      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-      cmd={"clangd", "-j=4", "-completion-style=detailed", "-background-index", "-all-scopes-completion", "--suggest-missing-includes"}
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    },
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    cmd={"clangd", "-j=4", "-completion-style=detailed", "-background-index", "-all-scopes-completion", "--suggest-missing-includes"}
+  }
+  nvim_lsp.sumneko_lua.setup{
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    },
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' }
+        }
+      }
+    }
   }
 end
-EOF
