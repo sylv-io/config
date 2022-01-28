@@ -192,7 +192,7 @@ setup_nvim() {
 ### Shell
 
 profile="$dir/dots/profile"
-profile_hook="echo \$- | grep -q i && [ -f $profile ] && . $profile"
+profile_hook="[ -f $profile ] && . $profile"
 
 del_profile_hook() {
   file="$1"
