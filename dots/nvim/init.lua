@@ -11,10 +11,6 @@ autocmd VimResized * wincmd =
 -- Enable syntax highlighting
 vim.o.syntax = "on"
 vim.o.list = true
--- Number of spaces that a <Tab> in the file counts for
-vim.o.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
 vim.o.listchars = "tab:>-,nbsp:_,trail:•,extends:>,precedes:<"
 vim.o.cc = "80";
 
