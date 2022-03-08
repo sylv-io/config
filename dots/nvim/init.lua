@@ -76,7 +76,6 @@ vim.o.sidescrolloff = 5
 -- Folding
 vim.o.foldenable = false
 vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- Timeout on leaderkey
 vim.o.ttimeout = true
