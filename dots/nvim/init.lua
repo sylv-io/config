@@ -193,7 +193,7 @@ else
 
   -- init lsp servers
   local servers = { 'als', 'bashls', 'cmake', 'dockerls', 'dotls', 'golangci_lint_ls', 'gopls', 'html', 'jsonls', 'texlab',
-  'rnix', 'psalm', 'pyright', 'rls', 'taplo', 'tsserver', 'vimls', 'yamlls' }
+  'rnix', 'perlpls', 'psalm', 'pyright', 'rls', 'taplo', 'tsserver', 'vimls', 'yamlls' }
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
