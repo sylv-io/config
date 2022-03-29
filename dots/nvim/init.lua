@@ -5,6 +5,13 @@ highlight ColorColumn ctermbg=black
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 autocmd VimResized * wincmd =
+
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0
+let g:go_def_mode = ''
+let g:go_info_mode = ''
+let g:go_gopls_enabled = 0
 ]])
 
 ---- settings
@@ -127,6 +134,8 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   -- LSP
   use 'neovim/nvim-lspconfig'
+  -- Golang
+  use 'fatih/vim-go'
   -- complete
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
