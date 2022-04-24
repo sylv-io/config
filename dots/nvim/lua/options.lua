@@ -44,15 +44,15 @@ vim.o.wrap = true
 vim.o.linebreak = true
 -- Autom. read file when changed outside of Vim
 vim.o.autoread = true
--- For opening splits on right or bottom.
-vim.o.splitbelow = true
-vim.o.splitright = true
 -- Show cursor line and column in the status line
 vim.o.ruler = true
 -- Show absolute line number in front of each line
 vim.o.relativenumber = false
 -- Ignore case when completing file names and directories.
 vim.o.wildignorecase = true
+-- Show tabs and trailing spaces
+vim.o.list = true
+vim.o.listchars = "tab:>-,nbsp:_,trail:•,extends:>,precedes:<"
 -- Neovide config
 vim.g.neovide_cursor_animation_length = 0.0
 vim.g.neovide_cursor_trail_length = 0.0

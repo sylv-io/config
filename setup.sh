@@ -166,7 +166,7 @@ check_nvim() {
     else
       nvim_bin="nvim"
     fi
-    min_major=6
+    min_major=7
     min_minor=0
     major=$(${nvim_bin} -v | head -n1 |cut -d '.' -f2)
     minor=$(${nvim_bin} -v | head -n1 |cut -d '.' -f3)

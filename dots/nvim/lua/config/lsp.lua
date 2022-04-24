@@ -36,10 +36,11 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local lspconfig = require('lspconfig')
-local servers = { 'als', 'bashls', 'cmake', 'dockerls', 'dotls', 'golangci_lint_ls', 'gopls', 'html', 'jsonls', 'texlab', 'rnix', 'perlpls', 'psalm', 'pyright', 'rls', 'taplo', 'tsserver', 'vimls', 'yamlls' }
+local servers = { 'als', 'bashls', 'cmake', 'dockerls', 'dotls', 'golangci_lint_ls', 'html', 'jsonls', 'texlab', 'rnix', 'perlpls', 'psalm', 'pyright', 'rls', 'taplo', 'tsserver', 'vimls', 'yamlls' }
 for _, lsp in pairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
+    capabilities = capabilities,
     flags = {
       -- This will be the default in neovim 0.7+
       debounce_text_changes = 150,
@@ -47,17 +48,18 @@ for _, lsp in pairs(servers) do
   }
 end
 -- TODO: prevent default boilerplate
--- custom lsp setup for clangd
+-- clangd
 lspconfig.clangd.setup{
-  on_attach = on_attach,
+  capabilities = capabilities,
+  cmd={"clangd", "-j=4", "-completion-style=detailed", "-background-index", "-all-scopes-completion", "--suggest-missing-includes"},
   flags = {
     debounce_text_changes = 150,
   },
-  cmd={"clangd", "-j=4", "-completion-style=detailed", "-background-index", "-all-scopes-completion", "--suggest-missing-includes"}
-}
--- custom lsp setup for lua
-lspconfig.sumneko_lua.setup{
   on_attach = on_attach,
+}
+-- lua
+lspconfig.sumneko_lua.setup{
+  capabilities = capabilities,
   flags = {
     debounce_text_changes = 150,
   },
@@ -67,7 +69,26 @@ lspconfig.sumneko_lua.setup{
         globals = { 'vim', 'use' }
       }
     }
-  }
+  },
+  on_attach = on_attach
+}
+-- Go
+lspconfig.gopls.setup{
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  settings = {
+    gopls = {
+      experimentalPostfixCompletions = true,
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+      },
+      staticcheck = true,
+    },
+  },
+  on_attach = on_attach
 }
 
 -- nvim-cmp setup
