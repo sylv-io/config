@@ -330,6 +330,7 @@ setup_done() {
 
 dotconfig nvim .config/nvim
 dotconfig tmux.conf .tmux.conf
+dotconfig lazygit.yml .config/lazygit/config.yml
 setup_git
 setup_ssh
 setup_shell
