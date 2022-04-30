@@ -3,12 +3,35 @@ return require("packer").startup(function()
 	use("wbthomason/packer.nvim")
 	-- Improve startup time
 	use("lewis6991/impatient.nvim")
+	-- Treesitter
+	use("nvim-treesitter/nvim-treesitter")
 	-- LSP
-	use("neovim/nvim-lspconfig")
-	-- Autocompletion
-	use("hrsh7th/nvim-cmp")
+	use({
+		"neovim/nvim-lspconfig",
+		after = { "nvim-cmp"},
+	})
 	-- LSP source for nvim-cmp
 	use("hrsh7th/cmp-nvim-lsp")
+	-- Completion & Snippets
+	use("hrsh7th/cmp-nvim-lua")
+	use("hrsh7th/cmp-buffer")
+	use("hrsh7th/cmp-path")
+	use("hrsh7th/cmp-cmdline")
+	use("L3MON4D3/LuaSnip")
+	use("saadparwaiz1/cmp_luasnip")
+	-- Autocompletion
+	use({
+		"hrsh7th/nvim-cmp",
+		after = {
+			"LuaSnip",
+			"cmp_luasnip",
+			"cmp-nvim-lua",
+			"cmp-nvim-lsp",
+			"cmp-buffer",
+			"cmp-path",
+			"cmp-cmdline",
+		},
+	})
 	-- Go development
 	use("fatih/vim-go")
 	-- Display popup with possible keybindings
@@ -43,5 +66,12 @@ return require("packer").startup(function()
 		end,
 		requires = { { "nvim-telescope/telescope.nvim" } },
 		run = "make",
+	})
+	-- Terminal
+	use({
+		"akinsho/nvim-toggleterm.lua",
+		config = function()
+			require("config.terminal").setup()
+		end,
 	})
 end)
