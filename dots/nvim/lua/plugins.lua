@@ -59,19 +59,4 @@ return require("packer").startup(function()
 		end,
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
-	use({
-		"nvim-telescope/telescope-fzf-native.nvim",
-		config = function()
-			require("telescope").load_extension("fzf")
-		end,
-		requires = { { "nvim-telescope/telescope.nvim" } },
-		run = "make",
-	})
-	-- Terminal
-	use({
-		"akinsho/nvim-toggleterm.lua",
-		config = function()
-			require("config.terminal").setup()
-		end,
-	})
 end)
