@@ -65,15 +65,9 @@ local servers = {
       "-all-scopes-completion",
       "--suggest-missing-includes"
     },
-    flags = {
-      debounce_text_changes = 150,
-    },
   },
   -- lua
   sumneko_lua = {
-    flags = {
-      debounce_text_changes = 150,
-    },
     settings = {
       Lua = {
         diagnostics = {
@@ -84,9 +78,6 @@ local servers = {
   },
   -- Go
   gopls = {
-    flags = {
-      debounce_text_changes = 150,
-    },
     settings = {
       gopls = {
         experimentalPostfixCompletions = true,
@@ -99,16 +90,17 @@ local servers = {
     },
   },
 }
+
 for name, cfg in pairs(servers) do
   -- default server config
-  def = {
+  local def = {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 
   if type(cfg) == 'table' then
     -- merge server specific config
-    for k,v in ipairs(cfg) do def[k] = v end
+    for k,v in pairs(cfg) do def[k] = v end
   elseif cfg == false then
     -- skip this server
     return
@@ -116,6 +108,7 @@ for name, cfg in pairs(servers) do
 
   lspconfig[name].setup(def)
 end
+
 -- luasnip setup
 local luasnip = require 'luasnip'
 
