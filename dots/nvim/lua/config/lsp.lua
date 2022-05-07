@@ -36,56 +36,86 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local lspconfig = require('lspconfig')
-local servers = { 'als', 'bashls', 'cmake', 'dockerls', 'dotls', 'golangci_lint_ls', 'html', 'jsonls', 'texlab', 'rnix', 'perlpls', 'psalm', 'pyright', 'rls', 'taplo', 'tsserver', 'vimls', 'yamlls' }
-for _, lsp in pairs(servers) do
-  lspconfig[lsp].setup {
+local servers = {
+  als = true,
+  bashls = true,
+  cmake = true,
+  dockerls = true,
+  dotls = true,
+  golangci_lint_ls = true,
+  html = true,
+  jsonls = true,
+  texlab = true,
+  rnix = true,
+  perlpls = true,
+  psalm = true,
+  pyright = true,
+  rls = true,
+  taplo = true,
+  tsserver = true,
+  vimls = true,
+  yamlls = true,
+  -- clangd
+  clangd = {
+    cmd = {
+      "clangd",
+      "-j=4",
+      "-completion-style=detailed",
+      "-background-index",
+      "-all-scopes-completion",
+      "--suggest-missing-includes"
+    },
+    flags = {
+      debounce_text_changes = 150,
+    },
+  },
+  -- lua
+  sumneko_lua = {
+    flags = {
+      debounce_text_changes = 150,
+    },
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim', 'use' }
+        }
+      }
+    },
+  },
+  -- Go
+  gopls = {
+    flags = {
+      debounce_text_changes = 150,
+    },
+    settings = {
+      gopls = {
+        experimentalPostfixCompletions = true,
+        analyses = {
+          unusedparams = true,
+          shadow = true,
+        },
+        staticcheck = true,
+      },
+    },
+  },
+}
+for name, cfg in pairs(servers) do
+  -- default server config
+  def = {
     on_attach = on_attach,
     capabilities = capabilities,
   }
+
+  if type(cfg) == 'table' then
+    -- merge server specific config
+    for k,v in ipairs(cfg) do def[k] = v end
+  elseif cfg == false then
+    -- skip this server
+    return
+  end
+
+  lspconfig[name].setup(def)
 end
--- TODO: prevent default boilerplate
--- clangd
-lspconfig.clangd.setup{
-  capabilities = capabilities,
-  cmd={"clangd", "-j=4", "-completion-style=detailed", "-background-index", "-all-scopes-completion", "--suggest-missing-includes"},
-  flags = {
-    debounce_text_changes = 150,
-  },
-  on_attach = on_attach,
-}
--- lua
-lspconfig.sumneko_lua.setup{
-  capabilities = capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim', 'use' }
-      }
-    }
-  },
-  on_attach = on_attach
-}
--- Go
-lspconfig.gopls.setup{
-  capabilities = capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  settings = {
-    gopls = {
-      experimentalPostfixCompletions = true,
-      analyses = {
-        unusedparams = true,
-        shadow = true,
-      },
-      staticcheck = true,
-    },
-  },
-  on_attach = on_attach
-}
 -- luasnip setup
 local luasnip = require 'luasnip'
 
