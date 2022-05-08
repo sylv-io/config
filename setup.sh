@@ -326,15 +326,17 @@ setup_done() {
   esac
 }
 
-### exec
+main() {
+  dotconfig nvim .config/nvim
+  dotconfig tmux.conf .tmux.conf
+  dotconfig lazygit.yml .config/lazygit/config.yml
+  setup_git
+  setup_ssh
+  setup_shell
+  setup_nvim
+  setup_cmds
 
-dotconfig nvim .config/nvim
-dotconfig tmux.conf .tmux.conf
-dotconfig lazygit.yml .config/lazygit/config.yml
-setup_git
-setup_ssh
-setup_shell
-setup_nvim
-setup_cmds
+  setup_done
+}
 
-setup_done
+main
