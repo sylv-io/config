@@ -56,3 +56,7 @@ vim.o.listchars = "tab:>-,nbsp:_,trail:•,extends:>,precedes:<"
 -- Neovide config
 vim.g.neovide_cursor_animation_length = 0.0
 vim.g.neovide_cursor_trail_length = 0.0
+-- colorscheme
+vim.cmd('colorscheme industry')
+-- transparent background
+vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
