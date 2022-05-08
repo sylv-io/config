@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -eu
+
+is_command() {
+	command -v "$1" >/dev/null
+}
+
+go_install() {
+	if ! is_command go
+	then
+		>&2 echo "go not installed"
+		return 1
+	fi
+
+	go install github.com/jesseduffield/lazygit@latest
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.45.2
+	go install github.com/mattn/efm-langserver@latest
+	go install github.com/nametake/golangci-lint-langserver@latest
+	go install golang.org/x/tools/gopls@latest
+}
+
+main() {
+	go_install
+	echo "done"
+}
+
+main

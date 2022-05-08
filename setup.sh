@@ -84,10 +84,10 @@ case $arg in
     ;;
 esac
 
-### dotconfig
+### setup symbol links
 
-add_dotconfig() {
-  config="$dir/dots/$1"
+add_link() {
+  config="$dir/$1"
   dest="$HOME/$2"
   mkdir -p "$(dirname "$dest")"
   if [ -e "$dest" ] && [ ! -L "$dest" ]; then
@@ -100,7 +100,7 @@ add_dotconfig() {
   fi
 }
 
-del_dotconfig() {
+del_link() {
   dest="$HOME/$2"
   if [ -L "$dest" ]; then
     info "unlink: $dest"
@@ -112,6 +112,16 @@ del_dotconfig() {
   fi
 }
 
+### dotconfig
+
+add_dotconfig() {
+  add_link "dots/$1" "$2"
+}
+
+del_dotconfig() {
+  del_link "dots/$1" "$2"
+}
+
 dotconfig() {
   case $op in
     add)
@@ -119,6 +129,31 @@ dotconfig() {
       ;;
     del)
       del_dotconfig "$1" "$2"
+      ;;
+  esac
+}
+
+### scripts
+
+add_scripts() {
+  for s in scripts/*; do
+    add_link "$s" ".local/bin/$(basename "$s")"
+  done
+}
+
+del_scripts() {
+  for s in scripts/*; do
+    del_link "$s" ".local/bin/$(basename "$s")"
+  done
+}
+
+setup_scripts() {
+  case $op in
+    add)
+      add_scripts
+      ;;
+    del)
+      del_scripts
       ;;
   esac
 }
@@ -330,6 +365,7 @@ main() {
   dotconfig nvim .config/nvim
   dotconfig tmux.conf .tmux.conf
   dotconfig lazygit.yml .config/lazygit/config.yml
+  setup_scripts
   setup_git
   setup_ssh
   setup_shell

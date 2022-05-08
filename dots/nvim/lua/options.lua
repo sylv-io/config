@@ -25,8 +25,6 @@ vim.o.smartcase = true
 -- Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = "yes"
--- Decrease redraw time
-vim.o.redrawtime = 100
 -- Disable intro message
 vim.opt.shortmess:append("I")
 -- Disable ins-completion-menu messages
