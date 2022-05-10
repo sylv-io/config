@@ -53,6 +53,7 @@ local servers = {
   taplo = true,
   tsserver = true,
   vimls = true,
+  vuels = true,
   yamlls = true,
   -- clangd
   clangd = {
