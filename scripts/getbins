@@ -1,28 +1,35 @@
 #!/bin/sh
 
-set -eu
+set -u
 
 is_command() {
 	command -v "$1" >/dev/null
 }
 
 go_install() {
+	package="$1"
+	version="${2:-latest}"
+
+	target="$package@$version"
+	go install "$target" || >&2 echo "failed to install $target"
+}
+
+go_bins() {
 	if ! is_command go
 	then
 		>&2 echo "go not installed"
 		return 1
 	fi
 
-	go install github.com/jesseduffield/lazygit@latest
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.45.2
-	go install github.com/mattn/efm-langserver@latest
-	go install github.com/nametake/golangci-lint-langserver@latest
-	go install golang.org/x/tools/gopls@latest
+	go_install golang.org/x/tools/gopls
+	go_install github.com/jesseduffield/lazygit
+	go_install github.com/mattn/efm-langserver
+	go_install github.com/golangci/golangci-lint/cmd/golangci-lint v1.45.2
+	go_install github.com/nametake/golangci-lint-langserver
 }
 
 main() {
-	go_install
-	echo "done"
+	go_bins
 }
 
 main
