@@ -1,11 +1,16 @@
 pcall(require, "impatient")
 
--- installs packer if needed
-if require("first_load")() then
+Init = not pcall(require, "packer")
+require("plugins")
+
+if Init then
+	-- reload configuration
+	vim.cmd [[
+		autocmd User PackerComplete source $MYVIMRC
+	]]
 	return
 end
 
-require("plugins")
 require("config")
 require("keymaps")
 require("options")
