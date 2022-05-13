@@ -38,6 +38,7 @@ end
 local lspconfig = require('lspconfig')
 local servers = {
   als = true,
+  bashls = true,
   cmake = true,
   dockerls = true,
   dotls = true,
