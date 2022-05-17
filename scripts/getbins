@@ -14,7 +14,23 @@ go_install() {
 	go install "$target" || >&2 echo "failed to install $target"
 }
 
-go_bins() {
+install_golangci() {
+	if ! is_command curl
+	then
+		>&2 echo "curl not installed"
+		return 1
+	fi
+
+	if is_command golangci-lint && [ "$(golangci-lint --version | cut -d ' ' -f 4)" = "1.46.2" ]
+	then
+		return 0
+	fi
+
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" v1.46.2
+	return $?
+}
+
+install_go_tools() {
 	if ! is_command go
 	then
 		>&2 echo "go not installed"
@@ -24,12 +40,12 @@ go_bins() {
 	go_install golang.org/x/tools/gopls
 	go_install github.com/jesseduffield/lazygit
 	go_install github.com/mattn/efm-langserver
-	go_install github.com/golangci/golangci-lint/cmd/golangci-lint v1.45.2
 	go_install github.com/nametake/golangci-lint-langserver
 }
 
 main() {
-	go_bins
+	install_go_tools
+	install_golangci
 }
 
 main

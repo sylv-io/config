@@ -5,7 +5,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   if not string.find(vim.o.runtimepath, rtp_addition) then
     vim.o.runtimepath = rtp_addition .. ',' .. vim.o.runtimepath
   end
-
   Packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
@@ -17,10 +16,7 @@ return require("packer").startup(function()
 	-- Treesitter
 	use("nvim-treesitter/nvim-treesitter")
 	-- LSP
-	use({
-		"neovim/nvim-lspconfig",
-		after = { "nvim-cmp"},
-	})
+	use("neovim/nvim-lspconfig")
 	-- LSP source for nvim-cmp
 	use("hrsh7th/cmp-nvim-lsp")
 	-- Completion & Snippets
@@ -31,18 +27,7 @@ return require("packer").startup(function()
 	use("L3MON4D3/LuaSnip")
 	use("saadparwaiz1/cmp_luasnip")
 	-- Autocompletion
-	use({
-		"hrsh7th/nvim-cmp",
-		after = {
-			"LuaSnip",
-			"cmp_luasnip",
-			"cmp-nvim-lua",
-			"cmp-nvim-lsp",
-			"cmp-buffer",
-			"cmp-path",
-			"cmp-cmdline",
-		},
-	})
+	use("hrsh7th/nvim-cmp")
 	-- Go development
 	use("fatih/vim-go")
 	-- Display popup with possible keybindings
@@ -68,7 +53,7 @@ return require("packer").startup(function()
 		config = function()
 			require("telescope").setup()
 		end,
-		requires = { { "nvim-lua/plenary.nvim" } },
+		requires = { "nvim-lua/plenary.nvim" },
 	})
 	-- Automatically set up your configuration after cloning packer.nvim
 	if Packer_bootstrap then
