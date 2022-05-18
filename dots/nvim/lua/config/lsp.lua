@@ -91,19 +91,6 @@ local servers = {
       },
     },
   },
-  efm = {
-    init_options = {documentFormatting = true},
-    filetypes = {"sh"},
-    settings = {
-        rootMarkers = {".git/"},
-        languages = {
-  -- bash shellcheck
-            sh = {
-              {lintCommand = 'shellcheck -f gcc -x', lintSource = 'shellcheck', lintFormats= {'%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m', '%f:%l:%c: %tote: %m'}}
-            }
-        }
-    }
-  },
 }
 
 for name, cfg in pairs(servers) do
