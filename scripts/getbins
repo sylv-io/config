@@ -43,9 +43,36 @@ install_go_tools() {
 	go_install github.com/nametake/golangci-lint-langserver
 }
 
+install_rust_tools() {
+	if ! is_command rustup
+	then
+		>&2 echo "rustup not installed"
+		return 1
+	fi
+
+	rustup component add rls rust-analysis rust-src
+}
+
+install_npm_tools() {
+	if ! is_command npm
+	then
+		>&2 echo "npm not installed"
+		return 1
+	fi
+
+	npm i -g @ansible/ansible-language-server
+	npm i -g bash-language-server
+	npm i -g dockerfile-language-server-nodejs
+	npm i -g dot-language-server
+	npm i -g @emacs-grammarly/unofficial-grammarly-language-server
+	npm i -g vscode-langservers-extracted
+}
+
 main() {
 	install_go_tools
 	install_golangci
+	install_rust_tools
+	install_npm_tools
 }
 
 main

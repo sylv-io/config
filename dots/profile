@@ -7,12 +7,15 @@ ip 2>&1 | grep -q BusyBox || alias ip='ip -color=auto'
 
 [[ ":$PATH:" = *:"$HOME/.local/bin":* ]] || export PATH="$HOME/.local/bin:$PATH"
 # bootstrap Rust
-alias init_rust="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+alias get_rust="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 [[ ":$PATH:" = *:"$HOME/.cargo/bin":* ]] || export PATH="$HOME/.cargo/bin:$PATH"
 # bootstrap Golang
 export GOPATH=${HOME}/go
-alias init_go="curl -sSf https://raw.githubusercontent.com/owenthereal/goup/master/install.sh | sh"
+alias get_go="curl -sSf https://raw.githubusercontent.com/sylv-io/goup/main/install.sh | sh"
 [[ ":$PATH:" = *:"$GOPATH/bin":* ]] || export PATH="$GOPATH/bin:$PATH"
+# bootstrap nvm and npm
+alias get_nvm="curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash"
+alias get_npm="nvm install node --latest-npm"
 # Editor
 alias vim=nvim
 export EDITOR=nvim

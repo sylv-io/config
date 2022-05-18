@@ -363,7 +363,6 @@ setup_done() {
 
 main() {
   dotconfig nvim .config/nvim
-  dotconfig npmrc .npmrc
   dotconfig tmux.conf .tmux.conf
   dotconfig lazygit.yml .config/lazygit/config.yml
   setup_scripts
