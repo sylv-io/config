@@ -41,6 +41,7 @@ install_go_tools() {
 	go_install github.com/jesseduffield/lazygit
 	go_install github.com/mattn/efm-langserver
 	go_install github.com/nametake/golangci-lint-langserver
+	install_golangci
 }
 
 install_rust_tools() {
@@ -70,7 +71,6 @@ install_npm_tools() {
 
 main() {
 	install_go_tools
-	install_golangci
 	install_rust_tools
 	install_npm_tools
 }
