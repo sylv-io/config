@@ -224,6 +224,62 @@ setup_nvim() {
   esac
 }
 
+### Tmux
+
+tmux="$bin/tmux"
+
+install_tmux() {
+  if can_download; then
+    info "downloading $tmux"
+    mkdir -p "$bin"
+    if [ -f "$tmux" ];then
+      rm -r "$tmux"
+    fi
+
+    # get latest version
+    tmux_src="$(download "https://api.github.com/repos/nelsonenzo/tmux-appimage/releases/latest" - \
+      | grep "browser_download_url.*appimage\"" | cut -d : -f 2,3 | cut -d \" -f2)"
+
+    download "$tmux_src" "$tmux" >/dev/null
+    chmod +x "$tmux"
+    if ! "$tmux" -v >/dev/null 2>&1;then
+      warn "fuse not supported. extracting tmux"
+      tmux_share="$HOME/.local/share/tmux"
+      mkdir -p "$tmux_share"
+      cd "$tmux_share"
+      if $tmux --appimage-extract >/dev/null 2>&1;then
+        ln -snf "$tmux_share/squashfs-root/AppRun" "$tmux"
+      else
+        rm "$tmux"
+        warn "Failed to install tmux"
+        return
+      fi
+    fi
+    if "$tmux" -v >/dev/null 2>&1;then
+      log_done "tmux installed"
+    fi
+  else
+    warn "Unable to download tmux"
+  fi
+}
+
+check_tmux() {
+  if is_command tmux || [ -x "$tmux" ] ;then
+    return
+  fi
+
+  install_tmux
+}
+setup_tmux() {
+  case $op in
+    add)
+      check_tmux
+      ;;
+    del)
+      ;;
+  esac
+}
+
 ### Shell
 
 profile="$dir/dots/profile"
@@ -370,6 +426,7 @@ main() {
   setup_ssh
   setup_shell
   setup_nvim
+  setup_tmux
   setup_cmds
 
   setup_done
