@@ -17,6 +17,8 @@ return require("packer").startup(function()
 	use("nvim-treesitter/nvim-treesitter")
 	-- LSP
 	use("neovim/nvim-lspconfig")
+	-- nvim-lsp progress UI
+	use("j-hui/fidget.nvim")
 	-- LSP source for nvim-cmp
 	use("hrsh7th/cmp-nvim-lsp")
 	-- Completion & Snippets
@@ -28,6 +30,8 @@ return require("packer").startup(function()
 	use("saadparwaiz1/cmp_luasnip")
 	-- Autocompletion
 	use("hrsh7th/nvim-cmp")
+	-- Java
+	use("mfussenegger/nvim-jdtls")
 	-- Go development
 	use("fatih/vim-go")
 	-- Display popup with possible keybindings

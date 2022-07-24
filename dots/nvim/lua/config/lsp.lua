@@ -39,25 +39,6 @@ local lspconfig = require('lspconfig')
 local servers = {
   als = true,
   bashls = true,
-  cmake = true,
-  dockerls = true,
-  dotls = true,
-  golangci_lint_ls = true,
-  html = true,
-  jsonls = true,
-  texlab = true,
-  rnix = true,
-  perlpls = true,
-  psalm = true,
-  pylsp = true,
-  pyright = true,
-  rls = true,
-  taplo = true,
-  tsserver = true,
-  vimls = true,
-  vuels = true,
-  yamlls = true,
-  -- clangd
   clangd = {
     cmd = {
       "clangd",
@@ -68,17 +49,10 @@ local servers = {
       "--suggest-missing-includes"
     },
   },
-  -- lua
-  sumneko_lua = {
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { 'vim', 'use' }
-        }
-      }
-    },
-  },
-  -- Go
+  cmake = true,
+  dockerls = true,
+  dotls = true,
+  golangci_lint_ls = true,
   gopls = {
     settings = {
       gopls = {
@@ -91,6 +65,36 @@ local servers = {
       },
     },
   },
+  html = true,
+  jdtls = true,
+  jsonls = true,
+  perlpls = true,
+  psalm = true,
+  pylsp = {
+    cmd = {
+      "pyright-langserver",
+      "--stdio",
+      "--ignore=E501,E261",
+    },
+  },
+  pyright = true,
+  rls = true,
+  rnix = true,
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim', 'use' }
+        }
+      }
+    },
+  },
+  taplo = true,
+  texlab = true,
+  tsserver = true,
+  vimls = true,
+  vuels = true,
+  yamlls = true,
 }
 
 for name, cfg in pairs(servers) do
@@ -110,6 +114,9 @@ for name, cfg in pairs(servers) do
 
   lspconfig[name].setup(def)
 end
+
+-- nvim-lsp progress UI
+require"fidget".setup{}
 
 -- luasnip setup
 local luasnip = require 'luasnip'
