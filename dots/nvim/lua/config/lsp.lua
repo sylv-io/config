@@ -1,6 +1,6 @@
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -38,6 +38,15 @@ end
 local lspconfig = require('lspconfig')
 local servers = {
   als = true,
+  asm_lsp = {
+    filetypes = {
+      "asm",
+      "asm16",
+      "vmasm",
+      "nasm",
+      "nasmb",
+    },
+  },
   bashls = true,
   clangd = {
     cmd = {
@@ -70,15 +79,16 @@ local servers = {
   jsonls = true,
   perlpls = true,
   psalm = true,
-  pylsp = {
-    cmd = {
-      "pyright-langserver",
-      "--stdio",
-      "--ignore=E501,E261",
-    },
-  },
+  --pylsp = {
+  --  plugins = {
+  --    pycodestyle = {
+  --      ignore = {'E501', 'E261'},
+  --      maxLineLength = 100
+  --    }
+  --  }
+  --},
   pyright = true,
-  rls = true,
+  rust_analyzer = true,
   rnix = true,
   sumneko_lua = {
     settings = {
@@ -94,7 +104,7 @@ local servers = {
   tsserver = true,
   vimls = true,
   vuels = true,
-  yamlls = true,
+  --yamlls = true,
 }
 
 for name, cfg in pairs(servers) do
