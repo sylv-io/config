@@ -426,7 +426,7 @@ main() {
   setup_ssh
   setup_shell
   setup_nvim
-  setup_tmux
+  #setup_tmux
   setup_cmds
 
   setup_done
