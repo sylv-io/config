@@ -236,10 +236,7 @@ install_tmux() {
       rm -r "$tmux"
     fi
 
-    # get latest version
-    tmux_src="$(download "https://api.github.com/repos/nelsonenzo/tmux-appimage/releases/latest" - \
-      | grep "browser_download_url.*appimage\"" | cut -d : -f 2,3 | cut -d \" -f2)"
-
+    tmux_src="https://github.com/nelsonenzo/tmux-appimage/releases/download/3.2a/tmux.appimage"
     download "$tmux_src" "$tmux" >/dev/null
     chmod +x "$tmux"
     if ! "$tmux" -v >/dev/null 2>&1;then
