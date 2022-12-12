@@ -29,6 +29,9 @@ vim.wo.signcolumn = "yes"
 vim.opt.shortmess:append("I")
 -- Disable ins-completion-menu messages
 vim.opt.shortmess:append("c")
+-- Disable mouse integration
+vim.o.mouse = ""
+vim.o.ttymouse = ""
 -- Take indent for new line from previous line
 vim.o.autoindent = true
 vim.o.smartindent = true
@@ -54,7 +57,7 @@ vim.o.listchars = "tab:>-,nbsp:_,trail:•,extends:>,precedes:<"
 -- Neovide config
 vim.g.neovide_cursor_animation_length = 0.0
 vim.g.neovide_cursor_trail_length = 0.0
--- colorscheme
-vim.cmd('colorscheme industry')
 -- transparent background
-vim.cmd('hi Normal guibg=NONE ctermbg=NONE')
+vim.cmd("hi Normal ctermbg=NONE guibg=NONE")
+-- readable pmenu
+vim.cmd("hi Pmenu ctermfg=white guifg=white ctermbg=black guibg=black")
