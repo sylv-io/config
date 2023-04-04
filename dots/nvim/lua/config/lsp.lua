@@ -90,7 +90,7 @@ local servers = {
   pyright = true,
   rust_analyzer = true,
   rnix = true,
-  sumneko_lua = {
+  lua_ls = {
     settings = {
       Lua = {
         diagnostics = {
@@ -159,7 +159,6 @@ cmp.setup {
     { name = "luasnip" },
     { name = "path" },
     { name = "buffer"},
-    { name = "cmdline"},
   },
 }
 
