@@ -22,12 +22,12 @@ return require("packer").startup(function()
 	-- LSP source for nvim-cmp
 	use("hrsh7th/cmp-nvim-lsp")
 	-- Completion & Snippets
+	use("hrsh7th/cmp-vsnip")
+	use("hrsh7th/vim-vsnip")
 	use("hrsh7th/cmp-nvim-lua")
 	use("hrsh7th/cmp-buffer")
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
-	use("L3MON4D3/LuaSnip")
-	use("saadparwaiz1/cmp_luasnip")
 	-- Autocompletion
 	use("hrsh7th/nvim-cmp")
 	-- Java
@@ -59,6 +59,15 @@ return require("packer").startup(function()
 		end,
 		requires = { "nvim-lua/plenary.nvim" },
 	})
+	-- improve rust lspconfig
+	use({
+		"simrat39/rust-tools.nvim",
+		config = function()
+			require("rust-tools").setup()
+		end,
+	})
+	use("nvim-lua/plenary.nvim")
+	use("mfussenegger/nvim-dap")
 	-- Automatically set up your configuration after cloning packer.nvim
 	if Packer_bootstrap then
 		require('packer').sync()

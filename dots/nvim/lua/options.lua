@@ -1,7 +1,7 @@
 -- Incremental live completion
 vim.o.inccommand = "nosplit"
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menuone,noinsert,noselect"
 -- Enable highlight on search
 vim.o.hlsearch = true
 -- highlight match while typing search pattern
