@@ -1,14 +1,12 @@
-pcall(require, "impatient")
+vim.loader.enable()
 
 Init = not pcall(require, "packer")
 require("plugins")
 
 if Init then
-	-- reload configuration
-	vim.cmd [[
-		autocmd User PackerComplete source $MYVIMRC
-	]]
-	return
+  -- reload configuration
+  vim.cmd("autocmd User PackerComplete source $MYVIMRC")
+  return
 end
 
 require("config")

@@ -61,3 +61,6 @@ vim.g.neovide_cursor_trail_length = 0.0
 vim.cmd("hi Normal ctermbg=NONE guibg=NONE")
 -- readable pmenu
 vim.cmd("hi Pmenu ctermfg=white guifg=white ctermbg=black guibg=black")
+-- Set file-specific indentation settings for code
+vim.cmd("autocmd FileType lua setlocal tabstop=2 shiftwidth=2 expandtab")
+vim.cmd("autocmd FileType nix setlocal tabstop=2 shiftwidth=2 expandtab")
