@@ -4,6 +4,7 @@ export SYLV=1
 ls 2>&1 | grep -q BusyBox || alias ls='ls --color=auto'
 diff 2>&1 | grep -q BusyBox || alias diff='diff --color=auto'
 ip 2>&1 | grep -q BusyBox || alias ip='ip -color=auto'
+#export LESS="-R"
 
 [[ ":$PATH:" = *:"$HOME/.local/bin":* ]] || export PATH="$HOME/.local/bin:$PATH"
 # bootstrap Rust
@@ -13,9 +14,6 @@ alias get_rust="curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
 export GOPATH=${HOME}/go
 alias get_go="curl -sSf https://raw.githubusercontent.com/sylv-io/goup/main/install.sh | sh"
 [[ ":$PATH:" = *:"$GOPATH/bin":* ]] || export PATH="$GOPATH/bin:$PATH"
-# bootstrap nvm and npm
-alias get_nvm="curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash"
-alias get_npm="nvm install node --latest-npm"
 # Editor
 alias vim=nvim
 export EDITOR=nvim

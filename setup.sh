@@ -418,12 +418,13 @@ main() {
   dotconfig nvim .config/nvim
   dotconfig tmux.conf .tmux.conf
   dotconfig lazygit.yml .config/lazygit/config.yml
+  dotconfig npmrc .npmrc
   setup_scripts
   setup_git
   setup_ssh
   setup_shell
   setup_nvim
-  #setup_tmux
+  setup_tmux
   setup_cmds
 
   setup_done
