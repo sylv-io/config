@@ -19,9 +19,7 @@ local servers = {
   clangd = {
     cmd = {
       "clangd",
-      "-j=4",
       "-completion-style=detailed",
-      "-background-index",
       "-all-scopes-completion",
       "--suggest-missing-includes"
     },

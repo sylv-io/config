@@ -31,7 +31,6 @@ vim.opt.shortmess:append("I")
 vim.opt.shortmess:append("c")
 -- Disable mouse integration
 vim.o.mouse = ""
-vim.o.ttymouse = ""
 -- Take indent for new line from previous line
 vim.o.autoindent = true
 vim.o.smartindent = true
