@@ -149,6 +149,16 @@ return require("packer").startup(function()
     end,
     requires = { "nvim-lua/plenary.nvim" },
   }
+  -- Aider Chat
+  use {
+    "joshuavial/aider.nvim",
+    config = function()
+      require('aider').setup {
+        --auto_manage_context = false,
+        --default_bindings = false
+      }
+    end
+  }
   -- Automatically set up your configuration after cloning packer.nvim
   if Packer_bootstrap then
     require('packer').sync()

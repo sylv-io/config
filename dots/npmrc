@@ -1,1 +1,2 @@
 prefix=~/.local
+@fortawesome:registry=https://npm.fontawesome.com/
