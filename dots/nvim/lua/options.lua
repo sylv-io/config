@@ -5,6 +5,8 @@ set.inccommand = "nosplit"
 set.completeopt = "menuone,noinsert,noselect"
 -- Enable highlight on search
 set.hlsearch = true
+-- Enable GUI colors in the terminal
+vim.o.termguicolors = true
 -- highlight match while typing search pattern
 set.incsearch = true
 -- Make line numbers default
