@@ -1,6 +1,10 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
+-- leader key
+vim.g.mapleader = '\\'
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+
 -- disable arrows
 map("n", "<Up>", "<NOP>", opts)
 map("n", "<Down>", "<NOP>", opts)
@@ -25,9 +29,9 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- set a keybinding for the AiderOpen function
-vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua AiderOpen()<cr>', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<leader>oa', '<cmd>lua AiderOpen()<cr>', {noremap = true, silent = true})
 -- set a keybinding for the AiderBackground function
-vim.api.nvim_set_keymap('n', '<leader>ob', '<cmd>lua AiderBackground()<cr>', {noremap = true, silent = true})
+--vim.api.nvim_set_keymap('n', '<leader>ob', '<cmd>lua AiderBackground()<cr>', {noremap = true, silent = true})
 
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
