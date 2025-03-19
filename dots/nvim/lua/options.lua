@@ -70,3 +70,10 @@ set.shiftwidth = 4
 -- Set file-specific indentation settings for code
 vim.cmd("autocmd FileType lua setlocal tabstop=2 shiftwidth=2 expandtab")
 vim.cmd("autocmd FileType nix setlocal tabstop=2 shiftwidth=2 expandtab")
+
+-- Ansible
+vim.filetype.add({
+  extension = {
+    yml = 'yaml.ansible'
+  }
+})

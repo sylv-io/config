@@ -5,6 +5,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- map buffer local keybindings when the language server attaches
 local lspconfig = require('lspconfig')
 local servers = {
+  ansiblels = true,
   --als = true,
   asm_lsp = {
     filetypes = {
