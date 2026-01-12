@@ -22,7 +22,6 @@ local servers = {
       "clangd",
       "-completion-style=detailed",
       "-all-scopes-completion",
-      "--suggest-missing-includes"
     },
   },
   cmake = true,
@@ -47,14 +46,14 @@ local servers = {
   mesonlsp = true,
   perlpls = true,
   psalm = true,
-  --pylsp = {
-  --  plugins = {
-  --    pycodestyle = {
-  --      ignore = {'E501', 'E261'},
-  --      maxLineLength = 100
-  --    }
-  --  }
-  --},
+  pylsp = {
+    plugins = {
+      pycodestyle = {
+        ignore = {'E501', 'E261'},
+        maxLineLength = 100
+      }
+    }
+  },
   pyright = true,
   rnix = true,
   lua_ls = {
