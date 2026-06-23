@@ -3,7 +3,6 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local lspconfig = require('lspconfig')
 local servers = {
   ansiblels = true,
   --als = true,
@@ -25,7 +24,7 @@ local servers = {
     },
   },
   cmake = true,
-  dockerls = true,
+  docker_language_server = true,
   dotls = true,
   golangci_lint_ls = true,
   gopls = {
@@ -56,6 +55,7 @@ local servers = {
   },
   pyright = true,
   rnix = true,
+  rust_analyzer = true,
   lua_ls = {
     settings = {
       Lua = {
@@ -87,31 +87,10 @@ for name, cfg in pairs(servers) do
     return
   end
 
-  lspconfig[name].setup(def)
+  --require'lspconfig'[name].setup(def)
+  vim.lsp.config(name, def)
+  vim.lsp.enable(name)
 end
-
--- rust
--- Configure LSP through rust-tools.nvim plugin.
--- rust-tools will configure and enable certain LSP features for us.
--- See https://github.com/simrat39/rust-tools.nvim#configuration
-local rust_opts = {
-  -- all the opts to send to nvim-lspconfig
-  -- these override the defaults set by rust-tools.nvim
-  -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-  server = {
-    settings = {
-      -- to enable rust-analyzer settings visit:
-      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-      ["rust-analyzer"] = {
-        -- enable clippy on save
-        checkOnSave = {
-          command = "clippy",
-        },
-      },
-    },
-  },
-}
-require("rust-tools").setup(rust_opts)
 
 -- nvim-lsp progress UI
 require"fidget".setup{}
